@@ -1,39 +1,48 @@
 import { ReactElement } from 'react'
 import { FaArrowRotateLeft, FaDivide, FaMinus, FaPlus, FaXmark } from 'react-icons/fa6'
+import { useAppDispatch } from '../app/hooks'
+import {
+  decrement,
+  division,
+  increment,
+  multiplication,
+  reset,
+} from '../features/counter/counterSlice'
 
 interface ButtonProps {
-  setCounter: React.Dispatch<React.SetStateAction<number>>
   amount: number
   operator: string
 }
 
 interface Operations {
-  [key: string]: (a: number, b: number) => number
+  [key: string]: (a: number) => void
 }
 
 interface OperatorIcon {
   [key: string]: ReactElement
 }
 
-const operations: Operations = {
-  '+': (a, b) => a + b,
-  '-': (a, b) => a - b,
-  '*': (a, b) => a * b,
-  '/': (a, b) => a / b,
-  reset: (a, b) => 0,
-}
+const Button: React.FC<ButtonProps> = ({ amount, operator }) => {
+  const dispatch = useAppDispatch()
 
-const operatorIcon: OperatorIcon = {
-  '+': <FaPlus />,
-  '-': <FaMinus />,
-  '*': <FaXmark />,
-  '/': <FaDivide />,
-  reset: <FaArrowRotateLeft />,
-}
+  const operations: Operations = {
+    '+': (a) => dispatch(increment(a)),
+    '-': (a) => dispatch(decrement(a)),
+    '*': (a) => dispatch(multiplication(a)),
+    '/': (a) => dispatch(division(a)),
+    reset: (a) => dispatch(reset()),
+  }
 
-const Button: React.FC<ButtonProps> = ({ setCounter, amount, operator }) => {
+  const operatorIcon: OperatorIcon = {
+    '+': <FaPlus />,
+    '-': <FaMinus />,
+    '*': <FaXmark />,
+    '/': <FaDivide />,
+    reset: <FaArrowRotateLeft />,
+  }
+
   const handleBtn = () => {
-    setCounter((counter) => operations[operator](counter, amount))
+    operations[operator](amount)
   }
 
   return <button onClick={handleBtn}>{operatorIcon[operator]}</button>

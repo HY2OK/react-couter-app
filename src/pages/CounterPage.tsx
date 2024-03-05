@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import styles from './CounterPage.module.css'
 import Button from '../components/Button'
+import { useAppSelector } from '../app/hooks'
 
 const CounterPage = () => {
-  const [counter, setCounter] = useState(0)
   const [amount, setAmount] = useState(1)
+  const counter = useAppSelector((state) => state.counter.value)
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(e.target.value))
@@ -23,11 +24,11 @@ const CounterPage = () => {
         />
       </div>
       <div className={styles.buttons}>
-        <Button setCounter={setCounter} amount={amount} operator="+" />
-        <Button setCounter={setCounter} amount={amount} operator="-" />
-        <Button setCounter={setCounter} amount={amount} operator="*" />
-        <Button setCounter={setCounter} amount={amount} operator="/" />
-        <Button setCounter={setCounter} amount={amount} operator="reset" />
+        <Button amount={amount} operator="+" />
+        <Button amount={amount} operator="-" />
+        <Button amount={amount} operator="*" />
+        <Button amount={amount} operator="/" />
+        <Button amount={amount} operator="reset" />
       </div>
     </div>
   )
