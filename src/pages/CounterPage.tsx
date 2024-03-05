@@ -5,6 +5,7 @@ import Button from '../components/Button'
 const CounterPage = () => {
   const [counter, setCounter] = useState(0)
   const [amount, setAmount] = useState(1)
+  const operators = ['+', '-', '*', '/', 'reset']
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(e.target.value))
@@ -23,11 +24,14 @@ const CounterPage = () => {
         />
       </div>
       <div className={styles.buttons}>
-        <Button setCounter={setCounter} amount={amount} operator="+" />
-        <Button setCounter={setCounter} amount={amount} operator="-" />
-        <Button setCounter={setCounter} amount={amount} operator="*" />
-        <Button setCounter={setCounter} amount={amount} operator="/" />
-        <Button setCounter={setCounter} amount={amount} operator="reset" />
+        {operators.map((operator, index) => (
+          <Button
+            key={index}
+            setCounter={setCounter}
+            amount={amount}
+            operator={operator}
+          />
+        ))}
       </div>
     </div>
   )
