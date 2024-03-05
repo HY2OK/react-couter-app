@@ -6,6 +6,7 @@ import { useAppSelector } from '../app/hooks'
 const CounterPage = () => {
   const [amount, setAmount] = useState(1)
   const counter = useAppSelector((state) => state.counter.value)
+  const operators = ['+', '-', '*', '/', 'reset']
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(e.target.value))
@@ -24,11 +25,9 @@ const CounterPage = () => {
         />
       </div>
       <div className={styles.buttons}>
-        <Button amount={amount} operator="+" />
-        <Button amount={amount} operator="-" />
-        <Button amount={amount} operator="*" />
-        <Button amount={amount} operator="/" />
-        <Button amount={amount} operator="reset" />
+        {operators.map((operator, index) => (
+          <Button key={index} amount={amount} operator={operator} />
+        ))}
       </div>
     </div>
   )
