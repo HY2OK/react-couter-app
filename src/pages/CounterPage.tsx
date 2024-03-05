@@ -12,9 +12,15 @@ const CounterPage = () => {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.title}>Counter App</h1>
       <div className={styles.textField}>{counter}</div>
       <div>
-        <input type="number" value={amount} onChange={handleInput} />
+        <input
+          className={styles.inputField}
+          type="number"
+          value={amount}
+          onChange={handleInput}
+        />
       </div>
       <div className={styles.buttons}>
         <Button setCounter={setCounter} amount={amount} operator="+" />
